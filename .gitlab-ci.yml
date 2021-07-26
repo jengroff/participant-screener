@@ -35,5 +35,4 @@ test:
     DATABASE_TEST_URL: postgresql://runner:runner@postgres:5432/users
   script:
     - pytest "src/tests" -p no:warnings
-    - black src --check
-    - isort src --check-only
+    - black src 
