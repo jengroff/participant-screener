@@ -1,0 +1,11 @@
+{
+  "prospect_name": "{{widgets.GetName.inbound.Body}}",
+  "prospect_email":  "{{widgets.GetEmail.inbound.Body}}",
+  "prospect_phone": "{{trigger.message.From}}",
+  "study_name": "{{widgets.Welcome.inbound.Body}}",
+  "response_1":  "{{widgets.response_1.inbound.Body}}",
+  "response_2":  "{{widgets.response_2.inbound.Body}}",
+  "response_3":  "{{widgets.response_3.inbound.Body}}",
+  "response_4":  "{{widgets.response_4.inbound.Body}}",
+  "response_5":  "{{widgets.response_5.inbound.Body}}"
+}

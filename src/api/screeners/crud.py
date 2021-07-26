@@ -1,10 +1,6 @@
 from src import db
 from src.api.screeners.models import Screener
-
-
-def get_all_responses():
-    screener = Screener.query.all()
-    return screener
+from src.looklook.helper_functions import get_prospect_id_from_email
 
 
 def get_all_screeners():
@@ -24,20 +20,29 @@ def get_response_by_study_name(study_name):
 
 
 def add_response(study_name,
-                 email,
-                 name,
-                 phone,
+                 prospect_email,
+                 prospect_name,
+                 prospect_phone,
+                 prospect_id=None,
                  response_1=None,
                  response_2=None,
                  response_3=None,
                  response_4=None,
-                 response_5=None
-                 ):
+                 response_5=None):
+
+    prospect_id = get_prospect_id_from_email(prospect_email)
+
     screener = Screener(
         study_name=study_name,
-        email=email,
-        name=name,
-        phone=phone
+        prospect_email=prospect_email,
+        prospect_name=prospect_name,
+        prospect_phone=prospect_phone,
+        prospect_id=prospect_id,
+        response_1=response_1,
+        response_2=response_2,
+        response_3=response_3,
+        response_4=response_4,
+        response_5=response_5
     )
     db.session.add(screener)
     db.session.commit()
