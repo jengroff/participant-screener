@@ -1,3 +1,5 @@
+import os
+
 from sqlalchemy.sql import func
 
 from src import db
@@ -19,7 +21,7 @@ class Participant(db.Model):
         self.phone = phone
         self.email = email
 
-#
+
 # if os.getenv("FLASK_ENV") == "development":
 #     from src import admin
 #     from src.api.participants.admin import UsersAdminView
