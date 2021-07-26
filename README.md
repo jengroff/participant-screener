@@ -1,12 +1,25 @@
-# Study Participant Screener
+# Participant Screener
 
 ## Overview
-### The point of this app is to facilitate the screening of applications from prospective study participants, by 
-### bringing the screening flow to SMS and WhatsApp messaging (where many people are more comfortable), 
-### and by semi-automating the process. 
+This app facilitates the screening of prospective study participants (i.e. applicants), by bringing the screening process to a modality that is more fluid and comfortable for them (SMS and WhatsApp) and through automation, using 
+Twilio Studio and Python. 
 
 ## Application Flow
-- 
+- Prospect contacts us through SMS or WhatsApp
+- During a full automated session, they:
+    - Answer up to 5 screening questions
+    - Give us their name and email address
+- We store this data, along with their phone number, in a Postgres database
+- Non-technical staff can track status and interact with prospests through an admin UI
+
+## Moving parts
+- Python, YAML, shell scripts
+- Flask, SQLAlchemy, PostgreSQL
+- Docker, GitLab CI/CD, Heroku
+- Ability to manage the Flask app and the database through the CLI
+- Pytest fixtures and tests
+- Black code formatting
+
 
 # Run the app ->
 
