@@ -13,12 +13,18 @@ screeners_namespace = Namespace("screeners")
 screener = screeners_namespace.model(
     "Screener",
     {
-        "id": fields.Integer(readOnly=True),
-        "name": fields.String(required=True),
-        "email": fields.String(required=True),
-        "phone": fields.String(required=True),
+        "screener_id": fields.Integer(readOnly=True),
+        "prospect_name": fields.String(required=True),
+        "prospect_email": fields.String(required=True),
+        "prospect_phone": fields.String(required=True),
+        "prospect_id": fields.String(required=False),
         "study_name": fields.String(required=True),
-        "created_date": fields.DateTime,
+        "response_1": fields.String(required=False),
+        "response_2": fields.String(required=False),
+        "response_3": fields.String(required=False),
+        "response_4": fields.String(required=False),
+        "response_5": fields.String(required=False),
+        "created_date": fields.DateTime(),
     },
 )
 
@@ -33,17 +39,33 @@ class ScreenerList(Resource):
     @screeners_namespace.response(201, "<screener_response> was added!")
     @screeners_namespace.response(400, "Sorry. That response was already submitted.")
     def post(self):
-        """Creates a new screener response."""
+        """Creates a new screener."""
         post_data = request.get_json()
         study_name = post_data.get("study_name")
-        email = post_data.get("email")
-        name = post_data.get("name")
-        phone = post_data.get("phone")
+        prospect_email = post_data.get("prospect_email")
+        prospect_name = post_data.get("prospect_name")
+        prospect_phone = post_data.get("prospect_phone")
+        prospect_id = post_data.get("prospect_id")
+        response_1 = post_data.get("response_1")
+        response_2 = post_data.get("response_2")
+        response_3 = post_data.get("response_3")
+        response_4 = post_data.get("response_4")
+        response_5 = post_data.get("response_5")
+
         response_object = {}
 
-        add_response(study_name, email, name, phone)
+        add_response(study_name,
+                     prospect_email,
+                     prospect_name,
+                     prospect_phone,
+                     prospect_id,
+                     response_1,
+                     response_2,
+                     response_3,
+                     response_4,
+                     response_5)
 
-        response_object["message"] = f"Screener response from {email} was added!"
+        response_object = response_object.update(add_response())
         return response_object, 201
 
 

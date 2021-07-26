@@ -3,6 +3,11 @@ from src.api.screeners.models import Screener
 
 
 def get_all_responses():
+    screener = Screener.query.all()
+    return screener
+
+
+def get_all_screeners():
     return Screener.query.all()
 
 
