@@ -1,10 +1,7 @@
-import sys
-
 from flask.cli import FlaskGroup
 
 from src import create_app, db
-from src.api.users.models import User
-
+from src.api.participants.models import Participant
 
 app = create_app()
 cli = FlaskGroup(create_app=create_app)
@@ -19,8 +16,8 @@ def recreate_db():
 
 @cli.command('seed_db')
 def seed_db():
-    db.session.add(User(username='michael', email="hermanmu@gmail.com"))
-    db.session.add(User(username='michaelherman', email="michael@mherman.org"))
+    db.session.add(Participant(name='jengroff', email='josh@marchingant.com', phone='+19172975952'))
+    db.session.add(Participant(name='joshengroff', email='josh.engroff@gmail.com', phone='+19172975952'))
     db.session.commit()
 
 

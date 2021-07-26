@@ -22,9 +22,6 @@ def create_app(script_info=None):
 
     # set up extensions
     db.init_app(app)
-    db.create_engine()
-
-
     if os.getenv("FLASK_ENV") == "development":
         admin.init_app(app)
 
