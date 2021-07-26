@@ -2,13 +2,12 @@ from flask import request
 from flask_restx import Namespace, Resource, fields
 
 from src.api.screeners.crud import (
-        get_all_responses,
-        get_response_by_screener_id,
-        add_response
+    get_all_screeners,
+    get_response_by_screener_id,
+    add_response
 )
 
 screeners_namespace = Namespace("screeners")
-
 
 screener = screeners_namespace.model(
     "Screener",
@@ -33,7 +32,7 @@ class ScreenerList(Resource):
     @screeners_namespace.marshal_with(screener, as_list=True)
     def get(self):
         """Returns all screener responses."""
-        return get_all_responses(), 200
+        return get_all_screeners(), 200
 
     @screeners_namespace.expect(screener, validate=True)
     @screeners_namespace.response(201, "<screener_response> was added!")
@@ -52,7 +51,7 @@ class ScreenerList(Resource):
         response_4 = post_data.get("response_4")
         response_5 = post_data.get("response_5")
 
-        response_object = {}
+        response_dict = {}
 
         add_response(study_name,
                      prospect_email,
@@ -65,8 +64,17 @@ class ScreenerList(Resource):
                      response_4,
                      response_5)
 
-        response_object = response_object.update(add_response())
-        return response_object, 201
+        response_dict = {"study_name": study_name,
+                         "prospect_email": prospect_email,
+                         "prospect_name": prospect_name,
+                         "prospect_id": prospect_id,
+                         "response_1": response_1,
+                         "response_2": response_2,
+                         "response_3": response_3,
+                         "response_4": response_4,
+                         "response_5": response_5
+                         }
+        return response_dict, 201
 
 
 class Screeners(Resource):

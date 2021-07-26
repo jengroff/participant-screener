@@ -1,0 +1,324 @@
+{
+  "description": "A New Flow",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "trigger",
+      "transitions": [
+        {
+          "next": "Welcome",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "incomingCall"
+        },
+        {
+          "event": "incomingRequest"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "name": "Welcome",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "CheckStudy",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 40,
+          "y": 180
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Hello and welcome! Please tell us which study you are here to join.",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "CheckStudy",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "response_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "response_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value matches_any_of mondelez",
+              "arguments": [
+                "{{widgets.Welcome.inbound.Body}}"
+              ],
+              "type": "not_equal_to",
+              "value": "chanel"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.Welcome.inbound.Body}}",
+        "offset": {
+          "x": 50,
+          "y": 440
+        }
+      }
+    },
+    {
+      "name": "response_1",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "response_2",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 180,
+          "y": 770
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Great, let's start the screener! We have some questions about your eating habits. \n\nFirst, do you like to eat?",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "GetName",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "ScreenerAPI",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 200,
+          "y": 2310
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "And finally, what is your name?",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "GetEmail",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "GetName",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 200,
+          "y": 2050
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Well done! Now we just need some contact info. \n\nWhat is your email address?",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "ScreenerSubmitted",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 1010,
+          "y": 2890
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "Thank you! Your screener has been submitted and you will hear back from us soon."
+      }
+    },
+    {
+      "name": "ScreenerAPI",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "ScreenerSubmitted",
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 200,
+          "y": 2550
+        },
+        "method": "POST",
+        "content_type": "application/json;charset=utf-8",
+        "body": "{\n  \"prospect_name\": \"{{widgets.GetName.inbound.Body}}\",\n  \"prospect_email\":  \"{{widgets.GetEmail.inbound.Body}}\",\n  \"prospect_phone\": \"{{trigger.message.From}}\",\n  \"study_name\": \"{{widgets.Welcome.inbound.Body}}\",\n  \"response_1\":  \"{{widgets.response_1.inbound.Body}}\",\n  \"response_2\":  \"{{widgets.response_2.inbound.Body}}\",\n  \"response_3\":  \"{{widgets.response_3.inbound.Body}}\",\n  \"response_4\":  \"{{widgets.response_4.inbound.Body}}\",\n  \"response_5\":  \"{{widgets.response_5.inbound.Body}}\"\n}",
+        "url": "http://3214df2d20da.ngrok.io/screeners"
+      }
+    },
+    {
+      "name": "response_2",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "response_3",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 180,
+          "y": 1030
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "How many meals do you eat per day, on average?",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "response_3",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "response_4",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 190,
+          "y": 1300
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "What is your favorite meal of the day?",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "response_4",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "response_5",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 200,
+          "y": 1540
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Do you like SmartSweets?",
+        "timeout": "3600"
+      }
+    },
+    {
+      "name": "response_5",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "GetEmail",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 200,
+          "y": 1800
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "Final question: do you have any unusual physical characteristics?",
+        "timeout": "3600"
+      }
+    }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": true
+  }
+}

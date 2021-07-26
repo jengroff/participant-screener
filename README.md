@@ -1,3 +1,13 @@
+# Study Participant Screener
+
+## Overview
+### The point of this app is to facilitate the screening of applications from prospective study participants, by 
+### bringing the screening flow to SMS and WhatsApp messaging (where many people are more comfortable), 
+### and by semi-automating the process. 
+
+## Application Flow
+- 
+
 # Run the app ->
 
 ## Docker (recommended):
