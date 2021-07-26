@@ -10,7 +10,7 @@ Twilio Studio and Python.
     - Answer up to 5 screening questions
     - Give us their name and email address
 - We store this data, along with their phone number, in a Postgres database
-- Non-technical staff can track status and interact with prospests through an admin UI
+- Non-technical staff can track status and interact with prospects through an admin UI
 
 ## Moving parts
 - Python, YAML, shell scripts
