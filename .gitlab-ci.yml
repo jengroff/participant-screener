@@ -3,6 +3,7 @@ image: docker:stable
 stages:
   - build
   - test
+  - deploy
 
 variables:
   IMAGE: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}
@@ -29,10 +30,29 @@ test:
   services:
     - postgres:latest
   variables:
-    POSTGRES_DB: users
+    POSTGRES_DB: screeners
     POSTGRES_USER: runner
     POSTGRES_PASSWORD: runner
-    DATABASE_TEST_URL: postgresql://runner:runner@postgres:5432/users
+    DATABASE_TEST_URL: postgresql://runner:runner@postgres:5432/screeners
   script:
     - pytest "src/tests" -p no:warnings
-    - black src 
+    - black src
+
+deploy:
+  stage: deploy
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    HEROKU_APP_NAME: infinite-tor-41640
+    HEROKU_REGISTRY_IMAGE: registry.heroku.com/$infinite-tor-41640/web
+  script:
+    - apk add --no-cache curl
+    - chmod +x ./release.sh
+    - docker build
+        --tag $HEROKU_REGISTRY_IMAGE
+        --file ./Dockerfile.prod
+        "."
+    - docker login -u _ -p $HEROKU_AUTH_TOKEN registry.heroku.com
+    - docker push $HEROKU_REGISTRY_IMAGE
+    - ./release.sh
