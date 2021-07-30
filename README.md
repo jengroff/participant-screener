@@ -1,7 +1,7 @@
 # Participant Screener
 
 ## Overview
-This app facilitates the screening of prospective study participants (i.e. applicants), by bringing the screening process to a modality that is more fluid and comfortable for them (SMS and WhatsApp) and through automation, using 
+This app facilitates the screening of study participants (i.e. applicants), by bringing the screening process to a modality that is more fluid and comfortable for them (SMS and WhatsApp) and through automation, using 
 Twilio Studio and Python. 
 
 ## Application Flow
