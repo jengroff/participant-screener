@@ -1,9 +1,9 @@
 # Automated Applicant Screener
 
-## Overview
-Mobile messaging assistant which interacts with, and captures data from, research study applicants. 
 
-## Application Flow
+#### _Mobile messaging assistant which interacts with, and captures data from, research study applicants._ 
+
+### Application Flow
 - App responds to inbound SMS or WhatsApp messages from users; 
 - During a fully automated session, the app: 
     - Asks an applicant 3 - 8 screening questions, to help determine study fit;
@@ -11,7 +11,7 @@ Mobile messaging assistant which interacts with, and captures data from, researc
 - Stores it all in a PostgreSQL database;
 - Presents it all in a Web UI for non-technical staff to view, edit, and track. 
 
-## Moving parts
+### Moving parts
 - Python, YAML, shell scripts
 - Flask, SQLAlchemy, PostgreSQL
 - Docker, GitLab CI/CD, Heroku
@@ -20,20 +20,20 @@ Mobile messaging assistant which interacts with, and captures data from, researc
 - Black code formatting
 
 
-# Run the app ->
+## Run the app ->
 
-## Docker (recommended):
+### Docker (recommended):
 #### Use docker-compose to build the image and run the container:
 ```
 docker-compose up -d --build
 ```
 
-## Create the database schema:
+### Create the database schema:
 ```
 docker-compose exec api python manage.py recreate_db'
 ```
     
-## Seed the database:
+### Seed the database:
 ```
 docker-compose exec api python manage.py seed_db'
 ```
