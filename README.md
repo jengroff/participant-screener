@@ -20,7 +20,8 @@
 - Black code formatting
 
 ### Example flow in Twilio Studio
-<img width="1113" alt="studio-flow" src="https://user-images.githubusercontent.com/30704684/127727631-6421e7cd-7439-4186-ab63-ae8eb6602fc3.png">
+<img width="926" alt="studio" src="https://user-images.githubusercontent.com/30704684/127727787-c2e01370-55e7-4605-9a12-a3de9148ca51.png">
+
 
 
 ```
