@@ -2,6 +2,8 @@ import requests
 import os
 from src.looklook.auth import get_headers
 from dotenv import load_dotenv
+from functools import lru_cache
+
 
 load_dotenv()
 
@@ -13,7 +15,7 @@ def get_study_invite_link(studyId: int):
     url = f"{hostname}/studies/{studyId}"
     response = requests.request("GET", url, headers=get_headers())
     response = response.json()
-    invite_link = response['study']['invitationLink']
+    invite_link = response["study"]["invitationLink"]
     return invite_link
 
 
@@ -28,13 +30,14 @@ def change_prospect_status(studyId: int, prospectId: str):
         pass
 
 
+@lru_cache()
 def get_prospect_id_from_email(email: str) -> str:
     url = "https://api.looklook.app/api/prospects?page=1&perPage=6000"
     response = requests.request("GET", url, headers=get_headers())
     response = response.json()
-    for i in response['prospects']:
-        if i['email'] == email:
-            return i['id']
+    for i in response["prospects"]:
+        if i["email"] == email:
+            return i["id"]
         else:
             pass
 
@@ -44,7 +47,7 @@ def add_prospect_to_study(email: str, studyId: int):
     payload = {"emailList": [email]}
     response = requests.request("POST", url, headers=get_headers(), json=payload)
     r_json = response.json()
-    prospectId = r_json['participants'][0]['id']
+    prospectId = r_json["participants"][0]["id"]
     if response.status_code == 200:
         change_prospect_status(studyId, prospectId)
         print(f"{email} has been added to the study")
@@ -58,7 +61,7 @@ def get_list_of_teams():
     url = "https://api.looklook.app/api/teams"
     response = requests.request("GET", url, headers=get_headers())
     response = response.json()
-    for i in response['teams']:
+    for i in response["teams"]:
         print(f"Name: {i['name']}")
         print(f"ID: {i['id']}")
         print(f"Parent ID: {i['parentId']}\n")
@@ -68,7 +71,7 @@ def get_list_of_studies(teamId: int):
     url = f"https://api.looklook.app/api/studies?perPage=100&page=1&teamId={teamId}"
     response = requests.request("GET", url, headers=get_headers())
     json_response = response.json()
-    for i in json_response['studies']:
+    for i in json_response["studies"]:
         print(f"Name:\t\t{i['name']}")
         print(f"id:\t\t{i['id']}")
         print(f"Participants:\t{i['meta']['participantCount']}")
@@ -77,7 +80,9 @@ def get_list_of_studies(teamId: int):
         print(f"Groups:\t\t{i['groups']}\n")
 
 
-def get_study_sentiment(studyId: int, keyword: str = None, score: int = -10.00, export: bool = False):
+def get_study_sentiment(
+    studyId: int, keyword: str = None, score: int = -10.00, export: bool = False
+):
     url = f"https://api.looklook.app/api/studies/{studyId}/analytics?layout=10&questionTypeFilter[]=10&includeModeratorReplies=false"
     response = requests.request("GET", url, headers=get_headers())
     result = response.json()

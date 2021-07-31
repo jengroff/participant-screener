@@ -19,16 +19,18 @@ def get_response_by_study_name(study_name):
     return Screener.query.filter_by(study_name=study_name).first()
 
 
-def add_response(study_name,
-                 prospect_email,
-                 prospect_name,
-                 prospect_phone,
-                 prospect_id=None,
-                 response_1=None,
-                 response_2=None,
-                 response_3=None,
-                 response_4=None,
-                 response_5=None):
+def add_response(
+    study_name,
+    prospect_email,
+    prospect_name,
+    prospect_phone,
+    prospect_id=None,
+    response_1=None,
+    response_2=None,
+    response_3=None,
+    response_4=None,
+    response_5=None,
+):
 
     prospect_id = get_prospect_id_from_email(prospect_email)
 
@@ -42,11 +44,12 @@ def add_response(study_name,
         response_2=response_2,
         response_3=response_3,
         response_4=response_4,
-        response_5=response_5
+        response_5=response_5,
     )
     db.session.add(screener)
     db.session.commit()
     return screener
+
 
 # def update_screener(screener_id):
 #     screener.screener_id = screenername

@@ -25,17 +25,19 @@ class Screener(db.Model):
 
     created_date = db.Column(db.DateTime, default=func.now(), nullable=False)
 
-    def __init__(self, study_name,
-                 prospect_name,
-                 prospect_email,
-                 prospect_phone,
-                 prospect_id=None,
-                 response_1=None,
-                 response_2=None,
-                 response_3=None,
-                 response_4=None,
-                 response_5=None
-                 ):
+    def __init__(
+        self,
+        study_name,
+        prospect_name,
+        prospect_email,
+        prospect_phone,
+        prospect_id=None,
+        response_1=None,
+        response_2=None,
+        response_3=None,
+        response_4=None,
+        response_5=None,
+    ):
         self.study_name = study_name
         self.prospect_name = prospect_name
         self.prospect_email = prospect_email

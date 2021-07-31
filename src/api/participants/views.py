@@ -62,7 +62,9 @@ class Participants(Resource):
         """Returns a single participant."""
         participant = get_participant_by_id(participant_id)
         if not participant:
-            participants_namespace.abort(404, f"Participant {participant_id} does not exist")
+            participants_namespace.abort(
+                404, f"Participant {participant_id} does not exist"
+            )
         return participant, 200
 
     @participants_namespace.expect(participant, validate=True)
@@ -79,7 +81,9 @@ class Participants(Resource):
 
         participant = get_participant_by_id(participant_id)
         if not participant:
-            participants_namespace.abort(404, f"Participant {participant_id} does not exist")
+            participants_namespace.abort(
+                404, f"Participant {participant_id} does not exist"
+            )
 
         if get_participant_by_email(email):
             response_object["message"] = "Sorry. That email already exists."
@@ -98,7 +102,9 @@ class Participants(Resource):
         participant = get_participant_by_id(participant_id)
 
         if not participant:
-            participants_namespace.abort(404, f"Participant {participant_id} does not exist")
+            participants_namespace.abort(
+                404, f"Participant {participant_id} does not exist"
+            )
 
         delete_participant(participant)
 

@@ -1,16 +1,15 @@
-# Participant Screener
+# Automated Applicant Screener
 
 ## Overview
-This app facilitates the screening of prospective study participants (i.e. applicants), by bringing the screening process to a modality that is more fluid and comfortable for them (SMS and WhatsApp) and through automation, using 
-Twilio Studio and Python. 
+Mobile messaging assistant which interacts with, and captures data from, research study applicants. 
 
 ## Application Flow
-- Prospect contacts us through SMS or WhatsApp
-- During a full automated session, they:
-    - Answer up to 5 screening questions
-    - Give us their name and email address
-- We store this data, along with their phone number, in a Postgres database
-- Non-technical staff can track status and interact with prospects through an admin UI
+- App responds to inbound SMS or WhatsApp messages from users; 
+- During a fully automated session, the app: 
+    - Asks an applicant 3 - 8 screening questions, to help determine study fit;
+    - Captures all the prospect's responses, as well as their phone number, email address, and name; 
+- Stores it all in a PostgreSQL database;
+- Presents it all in a Web UI for non-technical staff to view, edit, and track. 
 
 ## Moving parts
 - Python, YAML, shell scripts
