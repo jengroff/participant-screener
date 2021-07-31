@@ -4,7 +4,7 @@ from flask_restx import Namespace, Resource, fields
 from src.api.screeners.crud import (
     get_all_screeners,
     get_response_by_screener_id,
-    add_response
+    add_response,
 )
 
 screeners_namespace = Namespace("screeners")
@@ -53,27 +53,30 @@ class ScreenerList(Resource):
 
         response_dict = {}
 
-        add_response(study_name,
-                     prospect_email,
-                     prospect_name,
-                     prospect_phone,
-                     prospect_id,
-                     response_1,
-                     response_2,
-                     response_3,
-                     response_4,
-                     response_5)
+        add_response(
+            study_name,
+            prospect_email,
+            prospect_name,
+            prospect_phone,
+            prospect_id,
+            response_1,
+            response_2,
+            response_3,
+            response_4,
+            response_5,
+        )
 
-        response_dict = {"study_name": study_name,
-                         "prospect_email": prospect_email,
-                         "prospect_name": prospect_name,
-                         "prospect_id": prospect_id,
-                         "response_1": response_1,
-                         "response_2": response_2,
-                         "response_3": response_3,
-                         "response_4": response_4,
-                         "response_5": response_5
-                         }
+        response_dict = {
+            "study_name": study_name,
+            "prospect_email": prospect_email,
+            "prospect_name": prospect_name,
+            "prospect_id": prospect_id,
+            "response_1": response_1,
+            "response_2": response_2,
+            "response_3": response_3,
+            "response_4": response_4,
+            "response_5": response_5,
+        }
         return response_dict, 201
 
 
