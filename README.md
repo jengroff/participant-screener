@@ -19,17 +19,12 @@
 - Pytest fixtures and tests
 - Black code formatting
 
-```
-----------------------------------------------------------------
-```
+----------------------------------
 
 ### Example flow in Twilio Studio
 <img width="926" alt="studio" src="https://user-images.githubusercontent.com/30704684/127727787-c2e01370-55e7-4605-9a12-a3de9148ca51.png">
 
-
-```
-----------------------------------------------------------------
-```
+----------------------------------
 
 ## Run the app ->
 
