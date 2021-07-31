@@ -2,6 +2,7 @@
 
 
 #### _Mobile messaging assistant which interacts with, and captures data from, research study applicants._ 
+----
 
 ### Application Flow
 - App responds to inbound SMS or WhatsApp messages from users; 
