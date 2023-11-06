@@ -12,15 +12,12 @@ hostname = os.getenv("HOSTNAME")
 
 
 def get_study_invite_link(studyId: int):
-    url = f"{hostname}/studies/{studyId}"
     response = requests.request("GET", url, headers=get_headers())
     response = response.json()
-    invite_link = response["study"]["invitationLink"]
     return invite_link
 
 
 def change_prospect_status(studyId: int, prospectId: str):
-    url = f"{hostname}/studies/{studyId}/participants/{prospectId}"
     data = {"invitationState": 20}
     response = requests.request("PUT", url, json=data, headers=get_headers())
     response_json = response
@@ -32,7 +29,6 @@ def change_prospect_status(studyId: int, prospectId: str):
 
 @lru_cache()
 def get_prospect_id_from_email(email: str) -> str:
-    url = "https://api.looklook.app/api/prospects?page=1&perPage=6000"
     response = requests.request("GET", url, headers=get_headers())
     response = response.json()
     for i in response["prospects"]:

@@ -15,7 +15,7 @@ url = os.getenv("URL")
 
 
 def get_bearer_token():
-    url = "https://api.looklook.app/api/auth/login"
+    url = "https://"
     payload = json.dumps({"email": email, "password": password})
     headers = {"Content-Type": "application/json", "Cookie": cookie}
     response = requests.request("POST", url, headers=headers, data=payload)
